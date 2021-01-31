@@ -1,0 +1,45 @@
+group 'app.captureid.flutter_cidscan'
+version '1.0'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.2'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+        flatDir {
+            dirs 'libs'
+        }
+	}
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+dependencies {
+//    implementation fileTree(dir: 'libs', include:['*.aar'])
+    implementation files ('libs/CaptureIDLibrary.aar')
+    implementation files ('libs/CortexDecoderLibrary.aar')
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation "androidx.preference:preference:1.1.1"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+}
