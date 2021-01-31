@@ -933,7 +933,7 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
         public void onResult(ResultObject resultObject) {
           result.success(true);
         }
-      }, 0, 0, 0, 0, 10);
+      });
   }
 
   @Override
