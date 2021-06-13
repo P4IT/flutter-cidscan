@@ -18,17 +18,20 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  void handleInit(Map event) async {
-    if(event.values.elementAt(1).compareTo('initCaptureID') == 0) {
-      FlutterCidscan.activateEDKLicense(
-        'xbZBZfevKobN30GQ83U/G/Ou51FDAE4bpPLmh2wWllAhbiAPYyGN1IQ5CQ5LyinVkPM9iaZVRVPzjxoNGTNByOzIcbayZH+aBBSsbZI3xHw2Juq1ulrg8JzbP2eKvfKkNILx7l/RttX7Bjv+b9qRk8jfWz8IU0c4/sJMDewjOGyOZdhHv960oYzJ/DFkpC3Aebm5LsRkXsAU99GZC8fxp0xGP7bsLjn9AvBWMOEOmDjaD4pPrYub1HtLwtjsk5hTa60ofIaipaYqXY0/JgcQ01n9NxjoXJ0+91ekfSDNWSGI1WR6NToH9UvOUxmDa0XJrVhW6z68QV/4OyN4csiSWOwBykCGrhDodtJ3b6galvMzhR+UhIbhqSVHJ8eNXUQMYqEmST7iIICQw9aabVYiRA==',
-        'P4I082220190001').listen((event) { });
-    } else if(event.values.elementAt(1).compareTo('onActivationResult') == 0) {
+  void handleLicenseEvent(Map event) async {
+    if(event["FunctionName"].compareTo('onActivationResult') == 0) {
       String value = await FlutterCidscan.decoderVersion();
-      print(value);
+      print((value);
       startScanner();
     }
-    print(event);
+  }
+
+  void handleInit(Map event) async {
+    if(event["FunctionName"].compareTo('initCaptureID') == 0) {
+      FlutterCidscan.activateEDKLicense(
+        'ZzpC8qfZpYu3Z1hP0mAcb/ux1aCN71JxhT4VaDCNwC88IQ8kyFemwLsZbHDj5XWcKOcAPBb4KTfqUyILjaiMAP8xAANifrfIzFnC9q7pQR+W7llyV7OYN7eCgtVOs7zaHAaQtrHJ16zaALBnVHA2CnyRQwI0Ogc8qBvXSijGRMC9BtKBSCWFsxN4JWtbCBhUxQb8Qrp66DumE6BEukGu5iseafgbTHSm9qQpGURzX2K1xjL0MubHtyomYSdG98G4qzaQ2ZAHq7Z8H1WLRoBOhBJM9si+KqN3lr7ALNRCddlNwxvQE/4Y0R5HX7OhGKEF0jSjI84UjHtPe5+mACDxlsRuooCRC/Y3EYyFgilIxZyReWW2fmsyMYIOgA5VPSFGgtiKsekMwQavFvjzNYj/RQ==',
+        'P4I082220190001').listen((event) => { handleLicenseEvent(event) });
+    }
   }
 
   void startScanner() {

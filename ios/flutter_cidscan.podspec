@@ -9,15 +9,19 @@ Pod::Spec.new do |s|
   s.description      = <<-DESC
 Flutter Plugin for CaptureID Scanner Library
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'http://captureid.de'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'P4IT GmbH & Co. KG' => 'captureid@p4it.com' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
-  s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+  s.swift_version = '5.0'
+  s.requires_arc = true
+  s.ios.vendored_libraries = 'libCaptureIDLibrary.a'
+  s.libraries = 'CaptureIDLibrary'
+  s.xcconfig = { 'HEADER_SEARCH_PATHS' => "${PODS_ROOT}/#{s.name}/libs/**" }
 end

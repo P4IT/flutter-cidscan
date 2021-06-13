@@ -14,9 +14,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_cidscan/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_cidscan: a2d57d755719314aaf31d55089411de7dc8d08ae
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_cidscan: 12c891961943d0464ccb37c9e48197723b45fc04
 
-PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
 COCOAPODS: 1.10.0
