@@ -114,8 +114,9 @@ public class SwiftFlutterCidscanPlugin: NSObject, FlutterPlugin {
             result.setValue(0 as CLong, forKey: "longValue")
             result.setValue(0 as CGFloat, forKey: "floatValue")
             result.setValue("", forKey: "objValue")
-
-            self._inithandler.send(channel: self.INITHANDLER_ID, event: "initCaptureID", data: result)
+            let data = NSMutableDictionary()
+            data.setValue(result, forKey: "body")
+            self._inithandler.send(channel: self.INITHANDLER_ID, event: "initCaptureID", data: data)
         })
     }
     

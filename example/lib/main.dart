@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void handleInit(Map event) async {
-    if(event["FunctionName"].compareTo('initCaptureID') == 0) {
+    if(event["body"]["FunctionName"].compareTo('initCaptureID') == 0) {
       FlutterCidscan.activateEDKLicense(
         'ZzpC8qfZpYu3Z1hP0mAcb/ux1aCN71JxhT4VaDCNwC88IQ8kyFemwLsZbHDj5XWcKOcAPBb4KTfqUyILjaiMAP8xAANifrfIzFnC9q7pQR+W7llyV7OYN7eCgtVOs7zaHAaQtrHJ16zaALBnVHA2CnyRQwI0Ogc8qBvXSijGRMC9BtKBSCWFsxN4JWtbCBhUxQb8Qrp66DumE6BEukGu5iseafgbTHSm9qQpGURzX2K1xjL0MubHtyomYSdG98G4qzaQ2ZAHq7Z8H1WLRoBOhBJM9si+KqN3lr7ALNRCddlNwxvQE/4Y0R5HX7OhGKEF0jSjI84UjHtPe5+mACDxlsRuooCRC/Y3EYyFgilIxZyReWW2fmsyMYIOgA5VPSFGgtiKsekMwQavFvjzNYj/RQ==',
         'P4I082220190001').listen((event) => { handleLicenseEvent(event) });

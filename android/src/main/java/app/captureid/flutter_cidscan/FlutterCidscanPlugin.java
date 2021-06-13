@@ -53,6 +53,7 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
   private static int REQUESTID = 666;
   private static final String INITHANDLER_ID = "cidscan_init";
   private static final String DECODEHANDLER_ID = "cidscan_decode";
+  private static final String LICENSEHANDLER_ID = "cidscan_license";
 
   private String[] PERMISSIONS = {
           "android.permission.CAMERA",
@@ -230,7 +231,7 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
     this._activity = (FlutterActivity) activity;
     _initChannel = new EventChannel(messenger, INITHANDLER_ID);
     _initChannel.setStreamHandler(_inithandler);
-    _licenseChannel = new EventChannel(messenger, "cidscan_license");
+    _licenseChannel = new EventChannel(messenger, LICENSEHANDLER_ID);
     _licenseChannel.setStreamHandler(_licensehandler);
     _decodeChannel = new EventChannel(messenger, DECODEHANDLER_ID);
     _decodeChannel.setStreamHandler(_decodehandler);
@@ -414,7 +415,7 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
         JSONArray res = resultObject.toJSON();
         JSONObject obj = (JSONObject)res.get(0);
         if(obj.getString("FunctionName").equals("onActivationResult")) {
-          _inithandler.send(INITHANDLER_ID, obj.getString("FunctionName"), obj.toString());
+          _inithandler.send(LICENSEHANDLER_ID, obj.getString("FunctionName"), obj.toString());
         }
       } catch (JSONException e) {
         e.printStackTrace();
