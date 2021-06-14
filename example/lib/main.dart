@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void handleLicenseEvent(Map event) async {
-    if(event["FunctionName"].compareTo('onActivationResult') == 0) {
+    if(event["body"]["FunctionName"].compareTo('onActivationResult') == 0) {
       String value = await FlutterCidscan.decoderVersion();
       print(value);
       startScanner();
@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
 
   void handleDecode(Map event) {
     print(event);
-    if(event.values.elementAt(1).compareTo('receivedDecodedData') == 0) {
+    if(event["body"]["FunctionName"].compareTo('receivedDecodedData') == 0) {
       FlutterCidscan.stopDecoding();
       FlutterCidscan.stopCameraPreview();
     }

@@ -101,8 +101,23 @@ public class SwiftFlutterCidscanPlugin: NSObject, FlutterPlugin {
         let width = UIScreen.main.bounds.width
         let height = UIScreen.main.bounds.height
         
+        let vc = UIApplication.shared.keyWindow?.rootViewController?.view
+        
+//        if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {
+//                   navigationController.pushViewController(self.paytmTransactionController!, animated: true)
+//               }
+//
+//               let storyboard : UIStoryboard? = UIStoryboard.init(name: "Main", bundle: nil);
+//               let window: UIWindow = ((UIApplication.shared.delegate?.window)!)!
+//
+//               let objVC: UIViewController? = storyboard!.instantiateViewController(withIdentifier: "FlutterViewController")
+//               let aObjNavi = UINavigationController(rootViewController: objVC!)
+//               window.rootViewController = aObjNavi
+//               aObjNavi.pushViewController(self.paytmTransactionController!, animated: true)
+        
+        
         self.previewView = UIView.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
-        initialize(view: previewView!)
+        initialize(view: vc!)
     }
     
     private func initialize(view: UIView) {
@@ -122,7 +137,8 @@ public class SwiftFlutterCidscanPlugin: NSObject, FlutterPlugin {
     
     private func activateEDKLicense(filename: String, customerID: String) {
         self.library?.activateEDKLicense(filename, customerID: customerID, resultHandler: { (res) -> Void in
-            let data: NSMutableDictionary = (res[0] as! NSDictionary).mutableCopy() as! NSMutableDictionary
+            let data = NSMutableDictionary()
+            data.setValue((res[0] as! NSDictionary).mutableCopy() as! NSMutableDictionary, forKey: "body")
             self._licensehandler.send(channel: self.LICENSEHANDLER_ID, event: "onActivationResult", data: data)
         })
     }
@@ -149,12 +165,14 @@ public class SwiftFlutterCidscanPlugin: NSObject, FlutterPlugin {
         self.library?.decoderTimeLimit(inMilliseconds: milliseconds)
     }
     
-    public func decoderVersion() -> [Any] {
-        return self.library!.decoderVersion()
+    public func decoderVersion() -> String {
+        let data = self.library!.decoderVersion()[0] as! NSDictionary
+        return data["stringValue"] as! String
     }
     
-    public func decoderVersionLevel() -> [Any] {
-        return self.library!.decoderVersionLevel()
+    public func decoderVersionLevel() -> String {
+        let data = self.library!.decoderVersionLevel()[0] as! NSDictionary
+        return data["stringValue"] as! String
     }
     
 //    public func doDecode(java.nio.ByteBuffer pixBuf, int width, int height, int stride) {
@@ -189,8 +207,26 @@ public class SwiftFlutterCidscanPlugin: NSObject, FlutterPlugin {
         return self.library?.getMaxZoom() as! [CGFloat]
     }
 
-    private func getSdkVersion() -> [String] {
-        return self.library?.getSdkVersion() as! [String]
+    private func getSdkVersion() -> String {
+        let data = self.library?.getSdkVersion()[0] as! NSDictionary
+        return data["string Value"] as! String
+    }
+    
+    private func enableAllDecoders(enable: Bool) -> Any {
+        return self.library?.enableAllDecoders(enable)
+    }
+    
+    private func startCameraPreview() -> Any {
+        return self.library?.startCameraPreview({(res) -> Void in
+        })
+    }
+    
+    private func startDecoding() {
+        self.library?.startDecoder({(res) -> Void in
+            let data = NSMutableDictionary()
+            data.setValue((res[0] as! NSDictionary).mutableCopy() as! NSMutableDictionary, forKey: "body")
+            self._decodehandler.send(channel: self.DECODEHANDLER_ID, event: "receivedDecodedData", data: data)
+        })
     }
 
 //    private func getSensitivityBoost() {
@@ -341,13 +377,16 @@ public class SwiftFlutterCidscanPlugin: NSObject, FlutterPlugin {
 //      }
 //    }
 //
-//    private void stopCameraPreview() {
-//      _captureid.getCameraScanner().stopCameraPreview();
-//    }
+    
+    private func stopCameraPreview() {
+        self.library?.stopCameraPreview()
+    }
 //
-//    private void stopDecoding() {
-//      _captureid.getCameraScanner().stopDecoding();
-//    }
+
+    private func stopDecoding() {
+        self.library?.stopDecoding()
+    }
+    
 //
 //    private void toggleCamera() {
 //      int cameraidx = 0;
@@ -378,10 +417,10 @@ public class SwiftFlutterCidscanPlugin: NSObject, FlutterPlugin {
 //    }
 
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        let args = call.arguments as? NSDictionary
         if(call.method.elementsEqual("initCaptureID")) {
             initCaptureID()
         } else if(call.method.elementsEqual("activateEDKLicense")) {
-            let args = call.arguments as? NSDictionary
             let customer = args!["customerID"]
             let key = args!["key"]
             activateEDKLicense(filename: key as! String, customerID: customer as! String)
@@ -398,10 +437,16 @@ public class SwiftFlutterCidscanPlugin: NSObject, FlutterPlugin {
         } else if(call.method.elementsEqual("enableScannedImageCapture")) {
         } else if(call.method.elementsEqual("ensureRegionOfInterest")) {
         } else if(call.method.elementsEqual("enableAllDecoders")) {
+            let enable = args!["enable"] as! Bool
+            result(self.enableAllDecoders(enable: enable))
         } else if(call.method.elementsEqual("startCameraPreview")) {
+            self.startCameraPreview()
         } else if(call.method.elementsEqual("startDecoding")) {
+            self.startDecoding()
         } else if(call.method.elementsEqual("stopCameraPreview")) {
+            self.stopCameraPreview()
         } else if(call.method.elementsEqual("stopDecoding")) {
+            self.stopDecoding()
         } else {
             result("iOS " + UIDevice.current.systemVersion)
         }

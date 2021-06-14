@@ -415,7 +415,7 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
         JSONArray res = resultObject.toJSON();
         JSONObject obj = (JSONObject)res.get(0);
         if(obj.getString("FunctionName").equals("onActivationResult")) {
-          _inithandler.send(LICENSEHANDLER_ID, obj.getString("FunctionName"), obj.toString());
+          _licensehandler.send(LICENSEHANDLER_ID, obj.getString("FunctionName"), obj.toString());
         }
       } catch (JSONException e) {
         e.printStackTrace();

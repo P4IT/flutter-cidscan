@@ -27,7 +27,7 @@ public class LicenseStreamHandler: NSObject, FlutterStreamHandler {
 
     public func send(channel: String, event: String, data: NSMutableDictionary) {
         _data = data;
-        _data!["FunctionName"] = event
+        (_data!["body"] as! NSMutableDictionary)["FunctionName"] = event
         if(_sink != nil) {
             _sink!(_data)
             _data = nil

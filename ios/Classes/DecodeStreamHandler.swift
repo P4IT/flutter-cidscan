@@ -10,9 +10,13 @@ import Foundation
 public class DecodeStreamHandler: NSObject, FlutterStreamHandler {
     
     private var _sink: FlutterEventSink?
+    private var _data: NSMutableDictionary?
     
     public func onListen(withArguments arguments: Any?, eventSink events: @escaping FlutterEventSink) -> FlutterError? {
         self._sink = events
+        if(_data != nil) {
+            _sink!(_data)
+        }
         return nil
     }
     
@@ -21,23 +25,12 @@ public class DecodeStreamHandler: NSObject, FlutterStreamHandler {
         return nil
     }
 
-
-//  private void send(String channel, String event, String data) {
-//    try {
-//      JSONObject obj = new JSONObject(data);
-//      Map<String, Object> map = jsonToMap(obj);
-//      final Map<String, Object> res = new HashMap<>();
-//      res.put("channel", channel);
-//      res.put("event", event);
-//      res.put("body", map);
-//      new Handler(Looper.getMainLooper()).post(new Runnable() {
-//        @Override
-//        public void run() {
-//          _sink.success(res);
-//        }
-//      });
-//    } catch (JSONException e) {
-//      Log.e(TAG, e.getMessage());
-//    }
-//  }
+    public func send(channel: String, event: String, data: NSMutableDictionary) {
+        _data = data;
+        (_data!["body"] as! NSMutableDictionary)["FunctionName"] = event
+        if(_sink != nil) {
+            _sink!(_data)
+            _data = nil
+        }
+    }
 }
