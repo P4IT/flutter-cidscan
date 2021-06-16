@@ -213,7 +213,13 @@ public class SwiftFlutterCidscanPlugin: NSObject, FlutterPlugin {
     }
     
     private func enableAllDecoders(enable: Bool) -> Any {
-        return self.library?.enableAllDecoders(enable)
+        self.library?.enableAllDecoders(enable)
+        return true
+    }
+
+    private func enableDecoder(symbology: String, enable: Bool) -> Bool {
+        self.library?.enableDecoder(symbology, enable: enable)
+        return true;
     }
     
     private func startCameraPreview() -> Any {
@@ -438,6 +444,7 @@ public class SwiftFlutterCidscanPlugin: NSObject, FlutterPlugin {
         } else if(call.method.elementsEqual("ensureRegionOfInterest")) {
         } else if(call.method.elementsEqual("enableAllDecoders")) {
             let enable = args!["enable"] as! Bool
+            self.enableDecoder(symbology: "SymbologyType_Pharmaode", enable: false)
             result(self.enableAllDecoders(enable: enable))
         } else if(call.method.elementsEqual("startCameraPreview")) {
             self.startCameraPreview()
