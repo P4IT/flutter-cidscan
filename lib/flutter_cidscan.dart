@@ -58,6 +58,12 @@ class FlutterCidscan {
     });
   }
 
+  static void setTorch(bool enable) {
+    _channel.invokeMethod('setTorch', <String, dynamic> {
+      'enable': enable
+    });
+  }
+
   static Future<String> decoderVersion() async {
     return await _channel.invokeMethod('decoderVersion');
   }

@@ -14,6 +14,10 @@ import android.util.Size;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.codecorp.camera.CameraType;
+import com.codecorp.camera.Focus;
+import com.codecorp.camera.Resolution;
+
 import io.flutter.app.FlutterActivity;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
@@ -26,22 +30,15 @@ import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 import io.flutter.plugin.common.EventChannel.StreamHandler;
-
-import com.codecorp.camera.CameraType;
-import com.codecorp.camera.Focus;
-import com.codecorp.camera.Resolution;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import app.captureid.captureidlibrary.CaptureID;
 import app.captureid.captureidlibrary.result.ResultListener;
 import app.captureid.captureidlibrary.result.ResultObject;
@@ -223,6 +220,11 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
     if (registrar.context() != null) {
       app = (Application) (registrar.context().getApplicationContext());
     }
+    registrar
+            .platformViewRegistry()
+            .registerViewFactory(
+                    "app.captureid.captureidlibrary/cidscanview", new CIDScanViewFactory(registrar.messenger()));
+
     _plugin = new FlutterCidscanPlugin((FlutterActivity) registrar.activity(), registrar);
     _plugin.initialize(registrar.messenger(), activity);
   }
@@ -289,7 +291,7 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
   }
 
   class LicenseStreamHandler implements StreamHandler {
-    private final String TAG = InitStreamHandler.class.getSimpleName();
+    private final String TAG = LicenseStreamHandler.class.getSimpleName();
 
     private EventChannel.EventSink _sink;
 
@@ -311,12 +313,16 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
         res.put("channel", channel);
         res.put("event", event);
         res.put("body", map);
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
           @Override
           public void run() {
-            _sink.success(res);
+            try {
+              _sink.success(res);
+            } catch(NullPointerException ex) {
+              Log.d(TAG, "licenseStreamHandler :" + ex.getMessage());
+            }
           }
-        });
+        }, 50);
       } catch (JSONException e) {
         Log.e(TAG, e.getMessage());
       }
@@ -901,6 +907,9 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+    flutterPluginBinding.getPlatformViewRegistry().registerViewFactory(
+            "app.captureid.captureidlibrary/cidscanview",
+            new CIDScanViewFactory(flutterPluginBinding.getBinaryMessenger()));
     initialize(flutterPluginBinding.getBinaryMessenger(), _activity);
   }
 
@@ -910,7 +919,7 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
 
   @Override
   public void onAttachedToActivity(ActivityPluginBinding binding) {
-    _activity = binding.getActivity();
+      _activity = binding.getActivity();
     _context = _activity.getApplicationContext();
   }
 
@@ -1116,6 +1125,7 @@ public class FlutterCidscanPlugin implements FlutterPlugin, MethodCallHandler, A
       case FN_SET_SYMBOLOGY_PROPERTIES:
         break;
       case FN_SET_TORCH:
+        setTorch((boolean)call.argument("enable"));
         break;
       case FN_SET_WHITE_BALANCE:
         break;
