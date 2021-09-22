@@ -1,6 +1,6 @@
 name: flutter_cidscan
 description: Flutter Plugin for CaptureID Scanner Library
-version: 0.0.6
+version: 0.0.7
 homepage: https://github.com/P4IT/flutter-cidscan
 
 environment:

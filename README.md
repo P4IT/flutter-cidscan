@@ -4,12 +4,11 @@ Flutter Plugin for CaptureID Scanner Library
 
 ## Getting Started
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+This plugin provides a full screen camera barcode scanner preview and all the functions required to create high-performance apps with little effort.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
+If you need more control over the user interface or you want to use your own widgets, you can use our CIDScanView widget. you can insert the widget anywhere on the screen in the required size.
+ 
+For help getting started with the flutter-cidscan plugin, view our
+[online documentation](https://developer.captureid.de), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 

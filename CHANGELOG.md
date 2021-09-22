@@ -15,3 +15,7 @@ iOS support added
 ## 0.0.6
 
 scan widget for iOS
+
+## 0.0.7
+
+readme added
