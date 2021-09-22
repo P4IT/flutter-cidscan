@@ -8,3 +8,6 @@ disabled pharmacode symbology
 
 CortexDecoderLibrary update to version 2.8.1
 
+## 0.0.5
+
+iOS support added
