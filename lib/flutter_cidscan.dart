@@ -16,21 +16,21 @@ class FlutterCidscan {
   static Stream _decodeCallback;
 
   static Stream initCaptureID(String message, bool useCallback, bool requestPermsOnInit) {
+    _initCallback = _initChannel.receiveBroadcastStream();
     _channel.invokeMethod('initCaptureID', <String, dynamic> {
       'message': message,
       'useCallback': useCallback,
       'requestPermsOnInit': requestPermsOnInit
     });
-    _initCallback = _initChannel.receiveBroadcastStream();
     return _initCallback;
   }
 
   static Stream activateEDKLicense(String key, String customerID) {
+    _licenseCallback = _licenseChannel.receiveBroadcastStream();
     _channel.invokeMethod('activateEDKLicense', <String, dynamic> {
       'key': key,
       'customerID': customerID
     });
-    _licenseCallback = _licenseChannel.receiveBroadcastStream();
     return _licenseCallback;
   }
 

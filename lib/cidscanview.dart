@@ -4,25 +4,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 
 typedef void CIDScanViewCreatedCallback(CIDScanViewController controller);
 
 class CIDScanView extends StatefulWidget {
+  final int width;
+  final int height;
+
   const CIDScanView({
     Key key,
+    this.width,
+    this.height,
     this.onCIDScanViewCreated,
   }): super(key: key);
 
   final CIDScanViewCreatedCallback onCIDScanViewCreated;
 
   @override
-  State<StatefulWidget> createState() => _CIDScanViewState();
+  State<StatefulWidget> createState() {
+    return _CIDScanViewState();
+  }
 }
 
 class _CIDScanViewState extends State<CIDScanView> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     final String viewType = 'app.captureid.captureidlibrary/cidscanview';
     final Map<String, dynamic> creationParams = <String, dynamic>{};
+    creationParams['width'] = widget.width;
+    creationParams['height'] = widget.height;
 
     if (defaultTargetPlatform == TargetPlatform.android) {
       return AndroidView(
@@ -31,7 +46,10 @@ class _CIDScanViewState extends State<CIDScanView> {
       );
     } else {
       return UiKitView(
-        viewType: 'cidscanview',
+        creationParams: creationParams,
+        viewType: 'fluttercidscanview',
+        creationParamsCodec: const StandardMessageCodec(),
+        onPlatformViewCreated: _onPlatformViewCreated,
       );
     }
   }

@@ -2,7 +2,7 @@
 //  iOS_CaptureID_Library.h
 //  iOS-CaptureID-Library
 //
-//  Created by Christian Jung on 06.03.19.
+//  Created by Christian Jung on 06.03.19
 //  Copyright © 2019 Christian Jung. All rights reserved.
 //
 
