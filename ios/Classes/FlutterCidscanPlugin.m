@@ -179,7 +179,7 @@ DecodeStreamHandler * _decodeHandler;
 //        self.enableDecoder(symbology: "SymbologyType_Pharmaode", enable: false)
 //        result(self.enableAllDecoders(enable: enable))
     }  else if([call.method isEqual:@"startCameraPreview"]) {
-//        self.startCameraPreview()
+        [self startCameraPreview];
     }  else if([call.method isEqual:@"setTorch"]) {
         if([[args valueForKey:@"enable"] isEqual:[NSNumber numberWithBool:NO]]) {
             [self setTorch:NO];

@@ -1,7 +1,7 @@
 #import "FlutterCIDScanView.h"
 
 @implementation FlutterCIDScanView {
-   CIDScanView *_view;
+   SimpleScanner* _view;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -9,22 +9,29 @@
                     arguments:(id _Nullable)args
               binaryMessenger:(NSObject<FlutterBinaryMessenger>*)messenger {
     if (self = [super init]) {
-      _view = [CIDScanView getSharedObject: frame];
+        int width = [[(NSDictionary*)args valueForKey:@"width"] intValue];
+        int height = [[(NSDictionary*)args valueForKey:@"height"] intValue];
+        CGRect rc = CGRectMake(frame.origin.x, frame.origin.y, width, height);
+        _view = [SimpleScanner getSharedObject: rc];
     }
-    FlutterMethodChannel *_viewChannel = [FlutterMethodChannel
-                                          methodChannelWithName: [NSString stringWithFormat:@"app.captureid.captureidlibrary/cidscanview_%i", viewId]
-                                          binaryMessenger: messenger];
+    FlutterMethodChannel *_viewChannel = [FlutterMethodChannel methodChannelWithName:[NSString stringWithFormat:@"fluttercidscanview_%i", viewId] binaryMessenger:messenger];
     [_viewChannel setMethodCallHandler:^(FlutterMethodCall* call, FlutterResult result) {
         if ([@"startScanner"  isEqualToString:call.method]) {
-            [self->_view startScanner];
+            [self->_view startScanner:self];
+        } else if([@"startDecode" isEqualToString:call.method]) {
+            [self->_view startDecode];
         }
     }];
-
-  return self;
+    [self->_view startScanner:self];
+    return self;
 }
 
 - (UIView*)view {
   return _view;
+}
+
+- (void)onScannerStarted {
+    [_view startDecode];
 }
 
 @end

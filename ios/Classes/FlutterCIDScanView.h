@@ -1,11 +1,11 @@
 #import <Flutter/Flutter.h>
-#import "CIDScanView.h"
+#import "SimpleScanner.h"
 
-@interface FlutterCIDScanView : NSObject <FlutterPlatformView>
+@interface FlutterCIDScanView : NSObject <FlutterPlatformView, SimpleScannerEventListener>
 
 - (instancetype _Nullable )initWithFrame:(CGRect)frame
                viewIdentifier:(int64_t)viewId
                     arguments:(id _Nullable)args
               binaryMessenger:(NSObject<FlutterBinaryMessenger>* _Nonnull)messenger;
-- (CIDScanView * _Nonnull) view;
+- (SimpleScanner* _Nonnull) view;
 @end

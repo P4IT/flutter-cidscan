@@ -6,17 +6,22 @@
 //  Copyright © 2021 Christian Jung. All rights reserved.
 //
 
-#ifndef CIDScanView_h
-#define CIDScanView_h
+#ifndef SimpleScanner_h
+#define SimpleScanner_h
 
 #import <UIKit/UIKit.h>
 
-@interface CIDScanView : UIView
+@protocol SimpleScannerEventListener <NSObject>
+-(void)onScannerStarted;
+@end
 
-+(CIDScanView*_Nonnull) getSharedObject:(CGRect) frame;
+@interface SimpleScanner : UIView
+
++(SimpleScanner*_Nonnull) getSharedObject:(CGRect) frame;
 
 -(void) startDecode;
--(void) startScanner;
+-(void) startScanner:(id<SimpleScannerEventListener>_Nullable)listener;
+-(void) stopScanner;
 
 @end
-#endif /* CIDScanView_h */
+#endif /* SimpleScanner_h */

@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_cidscan (0.0.1):
+  - flutter_cidscan (0.0.2):
     - Flutter
 
 DEPENDENCIES:
@@ -14,9 +14,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_cidscan/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  flutter_cidscan: 12c891961943d0464ccb37c9e48197723b45fc04
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  flutter_cidscan: 9bd8484623b6f2c9edaa1e044e5238ab18e344fe
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.2

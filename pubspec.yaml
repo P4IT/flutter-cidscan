@@ -1,5 +1,5 @@
 name: flutter_cidscan
-description: Flutter Plugin for CaptureID Scanner Library
+description: The Flutter Plugin for the CaptureID Camera Scanner Library offers fast and reliable scanning of all common barcode symbologies.
 version: 0.0.7
 homepage: https://github.com/P4IT/flutter-cidscan
 
