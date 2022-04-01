@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   void handleInit(Map event) async {
     if(event["body"]["FunctionName"].compareTo('initCaptureID') == 0) {
       FlutterCidscan.activateEDKLicense(
-        'xrUJifzGeEwsQj/v6tb4CQ1GDC6/Hc7j4Qp25+nfNCpg85oCBkh7cGqyAJ5TO3HUJA/S58tSx0jZmSV1h9twrBqDfRj10hb6fxHoJiw30Zt2qEM0px+S9rZw0W45C0RtR0yBRDfaR4br4N0L6/P0CV7u9zqm8KJxrAthm9uS7Q0gQlsgnz3C84speRj8pEDUoaq7SAb2W/0KmBSOMGffxkNlrcZU4RoR4XtGmKu+bDGQaN/m1rGran1SrO0l0pZS7BXa7QewHk8K42RAWT3hLrQhwvXc7smiLGnwtFmhHoxNAj7fPrH3DxbPGnJNV3ijdpTyb8FUzL7sxbjp6nXJF/GkSgfrVfEtnOPoSu1W5OmoqP7TZvIxGRJDieTayvGncBBiC0nNj6BzOxGd4uFsAA==',
+        'avQGpsFFs5pKam7OyN8VjIdqeCv/lyU1lqQQ73lOdnfv/4VQHAotVJlBLcmAu180U7ix7n6XYZBdXEea2TnCsZOYuP8kiHcC/E9DLt1DJEh/65gr75Onj8CZ1HP0X2nRipGMgyEyqYfy9VA03USSYC3k51KXzYQosF19j4HKXyf32Jl47Aaw5FRPxZIbK3QLKDtqCtEq1PmRxY42ceLoEncQsHBRQa2niIcRQ+asvOb//4+hSCpJidqTwHhaLZs4SdjuzJIJRIDKB45mFVOnO/2S3kobKvTR48+h3ZQOS+eyVOFicwCByZ2D9Oqg/pTQQtZkLNwX31wdwE0QzoaJ8JX/N2jtM0vthbyIYizCj/XQb53d+t2spu0PTpt4gLWl2pJokOmK1OteQDtTzK4SzA==',
         'P4I082220190001').listen((event) => { handleLicenseEvent(event) });
     }
   }
@@ -62,7 +62,9 @@ class _MyAppState extends State<MyApp> {
     print(event);
     if(event["body"]["FunctionName"].compareTo('receivedDecodedData') == 0) {
       FlutterCidscan.stopDecoding();
-      FlutterCidscan.stopCameraPreview();
+      setState(() {
+        _visible = !_visible;
+      });
     }
   }
 
@@ -73,6 +75,7 @@ class _MyAppState extends State<MyApp> {
       startDecode();
     }
     setState(() {
+
       _visible = !_visible;
     });
   }

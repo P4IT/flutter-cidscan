@@ -19,3 +19,7 @@ scan widget for iOS
 ## 0.0.7
 
 readme added
+
+## 0.0.8
+
+armv7 x86_64 added to library platforms
