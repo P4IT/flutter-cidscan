@@ -23,3 +23,7 @@ readme added
 ## 0.0.8
 
 armv7 x86_64 added to library platforms
+
+## 0.0.9
+
+issue stopCameraPreview fixed
