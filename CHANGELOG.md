@@ -27,3 +27,7 @@ armv7 x86_64 added to library platforms
 ## 0.0.9
 
 issue stopCameraPreview fixed
+
+## 0.0.10
+
+result struct in ios match against android

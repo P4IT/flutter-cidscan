@@ -210,12 +210,15 @@ DecodeStreamHandler * _decodeHandler;
     _library = [[CaptureIDLibrary alloc]initWithUIview:view resultBlock:^(BOOL res) {
         NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
         [dict setValue:@"initCaptureID" forKey:@"FunctionName"];
-        [dict setValue:@"" forKey:@"error"];
+        [dict setValue:@0 forKey:@"error"];
         [dict setObject:@YES forKey:@"boolValue"];
-        [dict setValue:0L forKey:@"longValue"];
-        [dict setValue:0 forKey:@"floatValue"];
+        [dict setValue:@0L forKey:@"longValue"];
+        [dict setValue:@0 forKey:@"floatValue"];
+        [dict setValue:@"" forKey:@"stringValue"];
         [dict setValue:@"" forKey:@"objValue"];
         NSMutableDictionary * data = [[NSMutableDictionary alloc]init];
+        [data setValue:@"cidscan_init" forKey:@"channel"];
+        [data setValue:@"initCaptureID" forKey:@"event"];
         [data setObject:dict forKey:@"body"];
         [_initHandler send:@"cidscan_init" event:@"initCaptureID" data:data];
     }];
@@ -224,7 +227,17 @@ DecodeStreamHandler * _decodeHandler;
 -(void)activateEDKLicense:(NSString*)filename customerID:(NSString*)customerID {
     [_library activateEDKLicenseWithKey:filename customerID:customerID resultHandler:^(NSArray* res) {
         NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:[((NSMutableDictionary*)res[0]) mutableCopy] forKey:@"body"];
+        [dict setValue:@"onActivationResult" forKey:@"FunctionName"];
+        [dict setValue:@0 forKey:@"error"];
+        [dict setObject:@YES forKey:@"boolValue"];
+        [dict setValue:@0L forKey:@"longValue"];
+        [dict setValue:@0 forKey:@"floatValue"];
+        [dict setValue:res[0][@"message"] forKey:@"stringValue"];
+        [dict setValue:@"" forKey:@"objValue"];
+        NSMutableDictionary * data = [[NSMutableDictionary alloc]init];
+        [data setValue:@"cidscan_license" forKey:@"channel"];
+        [data setValue:@"onActivationResult" forKey:@"event"];
+        [data setObject:dict forKey:@"body"];
         [_licenseHandler send:@"cidscan_license" event:@"onActivationResult" data:dict];
     }];
 }
@@ -305,7 +318,17 @@ DecodeStreamHandler * _decodeHandler;
 -(void)startDecoding {
     [_library startDecoder:^(NSArray* res) {
         NSMutableDictionary * dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:[res[0] mutableCopy] forKey:@"body"];
+        [dict setValue:@"receivedDecodedData" forKey:@"FunctionName"];
+        [dict setValue:@0 forKey:@"error"];
+        [dict setObject:@YES forKey:@"boolValue"];
+        [dict setValue:@0L forKey:@"longValue"];
+        [dict setValue:@0 forKey:@"floatValue"];
+        [dict setValue:res[0][@"stringValue"] forKey:@"stringValue"];
+        [dict setValue:res[0][@"decodes"] forKey:@"objValue"];
+        NSMutableDictionary * data = [[NSMutableDictionary alloc]init];
+        [data setValue:@"cidscan_decode" forKey:@"channel"];
+        [data setValue:@"receivedDecodedData" forKey:@"event"];
+        [data setObject:dict forKey:@"body"];
         [_decodeHandler send:@"cidscan_decode" event:@"receivedDecodedData" data:dict];
     }];
 }

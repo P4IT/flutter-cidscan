@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   void handleInit(Map event) async {
     if(event["body"]["FunctionName"].compareTo('initCaptureID') == 0) {
       FlutterCidscan.activateEDKLicense(
-        'avQGpsFFs5pKam7OyN8VjIdqeCv/lyU1lqQQ73lOdnfv/4VQHAotVJlBLcmAu180U7ix7n6XYZBdXEea2TnCsZOYuP8kiHcC/E9DLt1DJEh/65gr75Onj8CZ1HP0X2nRipGMgyEyqYfy9VA03USSYC3k51KXzYQosF19j4HKXyf32Jl47Aaw5FRPxZIbK3QLKDtqCtEq1PmRxY42ceLoEncQsHBRQa2niIcRQ+asvOb//4+hSCpJidqTwHhaLZs4SdjuzJIJRIDKB45mFVOnO/2S3kobKvTR48+h3ZQOS+eyVOFicwCByZ2D9Oqg/pTQQtZkLNwX31wdwE0QzoaJ8JX/N2jtM0vthbyIYizCj/XQb53d+t2spu0PTpt4gLWl2pJokOmK1OteQDtTzK4SzA==',
+        'BNX9965QNM3ahzCaE514DD2zcGruYvEAJw2Aet6zYmxSW20x97BcZyWuzY/m+kckR3zIQB3DucWcvsHLuJK4/+z+lA/0YYf7x9zcwvxxkxr5NYMKl+MtPzoGeOtq+cTv0ThTapUOCsd2tLKzivOd52Y+gVStOJuD1mJchvjMX16Jzk8U/BFvRbuZBLEd6u7FvVzWNAS4tUNXPGvpU8zQNJDlvicgmELUu6dK4wr1VcbxepSpaAC6OW2g9L3Efq8ZTX9PtdAS3SRw4seuwpk5CDo5cS9dQ3vriY+AZVbIaqfkIN0OkbXgJIIAmYIBTgTDP9B2AqXSwYYNgbguOLCGGjrer9oZgpN+SgkhParPOX9ihr81jDMtNKvvDRYYDk5JjZj5e6cerRO1/sPtZ8dofg==',
         'P4I082220190001').listen((event) => { handleLicenseEvent(event) });
     }
   }
