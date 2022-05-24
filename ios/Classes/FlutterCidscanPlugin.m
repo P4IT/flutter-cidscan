@@ -11,92 +11,90 @@
 //#endif
 
 @interface InitStreamHandler: NSObject<FlutterStreamHandler>
-    
-
+    @property FlutterEventSink _sink;
+    @property NSDictionary *_data;
 @end
 
 @implementation InitStreamHandler
-FlutterEventSink _sink;
-NSDictionary *_data;
 
 - (FlutterError * _Nullable)onCancelWithArguments:(id _Nullable)arguments {
-    _sink = nil;
+    self._sink = nil;
     return nil;
 }
 
 - (FlutterError * _Nullable)onListenWithArguments:(id _Nullable)arguments eventSink:(nonnull FlutterEventSink)events {
-    _sink = events;
-    if(_data != nil) {
-        _sink(_data);
+    self._sink = events;
+    if(self._data != nil) {
+        self._sink(self._data);
     }
     return nil;
 }
 
 -(void)send:(NSString*)channel event:(NSString*)event data:(NSDictionary*)data {
-    _data = data;
-    if(_sink != nil) {
-        _sink(_data);
-        _data = nil;
+    self._data = data;
+    if(self._sink != nil) {
+        self._sink(_data);
+        self._data = nil;
     }
 }
 @end
 
 @interface LicenseStreamHandler: NSObject<FlutterStreamHandler>
+    @property FlutterEventSink _sink;
+    @property NSDictionary *_data;
 @end
 
 @implementation LicenseStreamHandler
-FlutterEventSink _sink;
-NSDictionary *_data;
 
 - (FlutterError * _Nullable)onCancelWithArguments:(id _Nullable)arguments {
-    _sink = nil;
+    self._sink = nil;
     return nil;
 }
 
 - (FlutterError * _Nullable)onListenWithArguments:(id _Nullable)arguments eventSink:(nonnull FlutterEventSink)events {
-    _sink = events;
-    if(_data != nil) {
-        _sink(_data);
+    self._sink = events;
+    if(self._data != nil) {
+        self._sink(self._data);
     }
     return nil;
 }
 
 -(void)send:(NSString*)channel event:(NSString*)event data:(NSDictionary*)data {
-    _data = data;
-    _data[@"body"][@"FunctionName"] = event;
-    if(_sink != nil) {
-        _sink(_data);
-        _data = nil;
+    self._data = data;
+    self._data[@"body"][@"FunctionName"] = event;
+    if(self._sink != nil) {
+        self._sink(_data);
+        self._data = nil;
     }
 }
 @end
 
 @interface DecodeStreamHandler: NSObject<FlutterStreamHandler>
+    @property FlutterEventSink _sink;
+    @property NSDictionary *_data;
 @end
 
 @implementation DecodeStreamHandler
-FlutterEventSink _sink;
-NSDictionary *_data;
 
 - (FlutterError * _Nullable)onCancelWithArguments:(id _Nullable)arguments {
-    _sink = nil;
+    self._sink = nil;
     return nil;
 }
 
 - (FlutterError * _Nullable)onListenWithArguments:(id _Nullable)arguments eventSink:(nonnull FlutterEventSink)events {
-    _sink = events;
-    if(_data != nil) {
-        _sink(_data);
+    self._sink = events;
+    if(self._data != nil) {
+        self._sink(self._data);
     }
     return nil;
 }
 
 -(void)send:(NSString*)channel event:(NSString*)event data:(NSDictionary*)data {
-    _data = data;
-    _data[@"body"][@"FunctionName"] = event;
-    if(_sink != nil) {
-        _sink(_data);
-        _data = nil;
+    self._data = data;
+    self._data[@"body"][@"FunctionName"] = event;
+    if(self._sink != nil) {
+        self._sink(self._data);
+        self._data = nil;
     }
 }
 @end
@@ -238,7 +236,7 @@ DecodeStreamHandler * _decodeHandler;
         [data setValue:@"cidscan_license" forKey:@"channel"];
         [data setValue:@"onActivationResult" forKey:@"event"];
         [data setObject:dict forKey:@"body"];
-        [_licenseHandler send:@"cidscan_license" event:@"onActivationResult" data:dict];
+        [_licenseHandler send:@"cidscan_license" event:@"onActivationResult" data:data];
     }];
 }
 
@@ -329,7 +327,7 @@ DecodeStreamHandler * _decodeHandler;
         [data setValue:@"cidscan_decode" forKey:@"channel"];
         [data setValue:@"receivedDecodedData" forKey:@"event"];
         [data setObject:dict forKey:@"body"];
-        [_decodeHandler send:@"cidscan_decode" event:@"receivedDecodedData" data:dict];
+        [_decodeHandler send:@"cidscan_decode" event:@"receivedDecodedData" data:data];
     }];
 }
 
