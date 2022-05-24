@@ -31,3 +31,7 @@ issue stopCameraPreview fixed
 ## 0.0.10
 
 result struct in ios match against android
+
+## 0.0.11
+
+properties added to handlers
