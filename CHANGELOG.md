@@ -35,3 +35,7 @@ result struct in ios match against android
 ## 0.0.11
 
 properties added to handlers
+
+## 0.0.12
+
+missing self
