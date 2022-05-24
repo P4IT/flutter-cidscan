@@ -33,7 +33,7 @@
 -(void)send:(NSString*)channel event:(NSString*)event data:(NSDictionary*)data {
     self._data = data;
     if(self._sink != nil) {
-        self._sink(_data);
+        self._sink(self._data);
         self._data = nil;
     }
 }
@@ -63,7 +63,7 @@
     self._data = data;
     self._data[@"body"][@"FunctionName"] = event;
     if(self._sink != nil) {
-        self._sink(_data);
+        self._sink(self._data);
         self._data = nil;
     }
 }
