@@ -11,11 +11,11 @@ class FlutterCidscan {
   static const EventChannel _licenseChannel = EventChannel('cidscan_license');
   static const EventChannel _decodeChannel = EventChannel('cidscan_decode');
 
-  static Stream _initCallback;
-  static Stream _licenseCallback;
-  static Stream _decodeCallback;
+  static Stream? _initCallback;
+  static Stream? _licenseCallback;
+  static Stream? _decodeCallback;
 
-  static Stream initCaptureID(String message, bool useCallback, bool requestPermsOnInit) {
+  static Stream? initCaptureID(String message, bool useCallback, bool requestPermsOnInit) {
     _initCallback = _initChannel.receiveBroadcastStream();
     _channel.invokeMethod('initCaptureID', <String, dynamic> {
       'message': message,
@@ -25,7 +25,7 @@ class FlutterCidscan {
     return _initCallback;
   }
 
-  static Stream activateEDKLicense(String key, String customerID) {
+  static Stream? activateEDKLicense(String key, String customerID) {
     _licenseCallback = _licenseChannel.receiveBroadcastStream();
     _channel.invokeMethod('activateEDKLicense', <String, dynamic> {
       'key': key,
@@ -48,7 +48,7 @@ class FlutterCidscan {
     _channel.invokeMethod('closeSharedLibrary');
   }
 
-  static Future<Map> currentSizeOfDecoderVideo() async {
+  static Future<Map?> currentSizeOfDecoderVideo() async {
     return await _channel.invokeMapMethod('currentSizeOfDecoderVideo');
   }
 
@@ -68,7 +68,7 @@ class FlutterCidscan {
     return await _channel.invokeMethod('decoderVersion');
   }
 
-  static Future<String> decoderVersionLevel() async {
+  static Future<Future> decoderVersionLevel() async {
     return _channel.invokeMethod('decoderVersionLevel');
   }
 
@@ -101,7 +101,7 @@ class FlutterCidscan {
     return await _channel.invokeMethod('startCameraPreview');
   }
 
-  static Stream startDecoding() {
+  static Stream? startDecoding() {
     _channel.invokeMethod('startDecoding');
     _decodeCallback = _decodeChannel.receiveBroadcastStream();
     return _decodeCallback;

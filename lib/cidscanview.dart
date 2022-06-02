@@ -13,10 +13,10 @@ class CIDScanView extends StatefulWidget {
   final int height;
 
   const CIDScanView({
-    Key key,
-    this.width,
-    this.height,
-    this.onCIDScanViewCreated,
+    Key? key,
+    this.width = 0,
+    this.height = 0,
+    required this.onCIDScanViewCreated,
   }): super(key: key);
 
   final CIDScanViewCreatedCallback onCIDScanViewCreated;

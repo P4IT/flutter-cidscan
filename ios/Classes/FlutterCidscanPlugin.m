@@ -230,6 +230,11 @@ DecodeStreamHandler * _decodeHandler;
         [dict setObject:@YES forKey:@"boolValue"];
         [dict setValue:@0L forKey:@"longValue"];
         [dict setValue:@0 forKey:@"floatValue"];
+        if([res[0][@"message"] isEqualToString:@"License_Valid"]) {
+            [dict setValue:@1 forKey:@"intValue"];
+        } else {
+            [dict setValue:@0 forKey:@"intValue"];
+        }
         [dict setValue:res[0][@"message"] forKey:@"stringValue"];
         [dict setValue:@"" forKey:@"objValue"];
         NSMutableDictionary * data = [[NSMutableDictionary alloc]init];

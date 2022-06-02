@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
     if(event["body"]["FunctionName"].compareTo('initCaptureID') == 0) {
       FlutterCidscan.activateEDKLicense(
         'BNX9965QNM3ahzCaE514DD2zcGruYvEAJw2Aet6zYmxSW20x97BcZyWuzY/m+kckR3zIQB3DucWcvsHLuJK4/+z+lA/0YYf7x9zcwvxxkxr5NYMKl+MtPzoGeOtq+cTv0ThTapUOCsd2tLKzivOd52Y+gVStOJuD1mJchvjMX16Jzk8U/BFvRbuZBLEd6u7FvVzWNAS4tUNXPGvpU8zQNJDlvicgmELUu6dK4wr1VcbxepSpaAC6OW2g9L3Efq8ZTX9PtdAS3SRw4seuwpk5CDo5cS9dQ3vriY+AZVbIaqfkIN0OkbXgJIIAmYIBTgTDP9B2AqXSwYYNgbguOLCGGjrer9oZgpN+SgkhParPOX9ihr81jDMtNKvvDRYYDk5JjZj5e6cerRO1/sPtZ8dofg==',
-        'P4I082220190001').listen((event) => { handleLicenseEvent(event) });
+        'P4I082220190001')!.listen((event) => { handleLicenseEvent(event) });
     }
   }
 
@@ -50,12 +50,12 @@ class _MyAppState extends State<MyApp> {
   void startScanner() {
     FlutterCidscan.enableAllDecoders(true);
     FlutterCidscan.startCameraPreview();
-    FlutterCidscan.startDecoding().listen((event) => { handleDecode(event) });
+    FlutterCidscan.startDecoding()!.listen((event) => { handleDecode(event) });
   }
 
   void restartScanner() {
     FlutterCidscan.startCameraPreview();
-    FlutterCidscan.startDecoding().listen((event) => { handleDecode(event) });
+    FlutterCidscan.startDecoding()!.listen((event) => { handleDecode(event) });
   }
 
   void handleDecode(Map event) {
@@ -81,11 +81,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   void startDecode() {
-    FlutterCidscan.startDecoding().listen((event) => {handleDecode(event)});
+    FlutterCidscan.startDecoding()!.listen((event) => {handleDecode(event)});
   }
 
   Future<void> init() async {
-    FlutterCidscan.initCaptureID('Wir benötigen die Kamera Berechtigung zum Scannen der Barcodes', false, true).listen((event) => { handleInit(event) });
+    FlutterCidscan.initCaptureID('Wir benötigen die Kamera Berechtigung zum Scannen der Barcodes', false, true)!.listen((event) => { handleInit(event) });
+  }
+
+  void onCreated(CIDScanViewController ctrl) {
+
   }
 
   @override
@@ -105,7 +109,7 @@ class _MyAppState extends State<MyApp> {
               child: CIDScanView(
                 height: 200,
                 width: 400,
-                onCIDScanViewCreated: null,
+                onCIDScanViewCreated: onCreated,
               ),
             ),
           ),
